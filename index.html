@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Trivia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Tech & Internet Culture Trivia</h1>
+  </header>
+
+  <main>
+
+    <!-- GAME SECTION -->
+    <section id="game-screen">
+      <!-- Questions and answers will be injected via JS -->
+    </section>
+
+
+    <!-- ADD QUESTION FORM -->
+    <section id="add-question">
+      <h2>Add a New Trivia Question</h2>
+
+      <form id="question-form">
+
+        <label>
+          Question:
+          <input type="text" id="qText" required>
+        </label>
+
+        <label>
+          Answer 1:
+          <input type="text" id="a1" required>
+        </label>
+
+        <label>
+          Answer 2:
+          <input type="text" id="a2" required>
+        </label>
+
+        <label>
+          Answer 3:
+          <input type="text" id="a3" required>
+        </label>
+
+        <label>
+          Answer 4:
+          <input type="text" id="a4" required>
+        </label>
+
+        <label>
+          Correct Answer (1–4):
+          <input type="number" id="correct" min="1" max="4" required>
+        </label>
+
+        <button type="submit">Add Question</button>
+      </form>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
