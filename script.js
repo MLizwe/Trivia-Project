@@ -48,12 +48,19 @@ const questions = [
 //state of the game 
 let currentIndex = 0;
 let score = 0;
+let wrong = 0;
+
 
 //possible functions ***to be expanded***
 function startGame() {
     currentIndex = 0;
     score = 0;
     showQuestion();
+}
+
+function updateScoreBoard(){
+    document.getElementById("correct").textContent = score;
+    document.getElementById("wrong").textContent = wrong;
 }
 
 function showQuestion() {
@@ -77,10 +84,26 @@ function showQuestion() {
 
 function showQuestions() {};
 function checkAnswer(selected) {
+    // guard: if somehow go past the length, end the game
+    if (currentIndex >= questions.length) {
+        endGame();
+        return;
+    }
+
     const q = questions[currentIndex];
+
+    if (!q) { 
+        endGame();
+        return;
+    }
+
     if (selected === q.correct) {
         score++;
+    } else {
+        wrong++;
     }
+
+    updateScoreBoard();
 
     currentIndex++;
 
@@ -89,14 +112,17 @@ function checkAnswer(selected) {
     } else {
         endGame();
     }
-};
+}
 
 function endGame() {
-    document.getElementById("game-screen").innerHTML = `
-        <h2>Game Over!</h2>
-        <p>You scored ${score} out of ${questions.length}.</p>
+    const container = document.getElementById("game-screen");
+    container.innerHTML = `
+        <h2>All done!</h2>
+        <p>Correct: ${score}</p>
+        <p>Wrong: ${wrong}</p>
     `;
-};
+}
+
 
 
 startGame();
