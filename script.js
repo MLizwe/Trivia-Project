@@ -30,7 +30,7 @@ const questions = [
     {
         text: "What is the most-used social app worldwide? ",
         answers: ["Tiktok", "Facebook", "Instagram", "Youtube"],
-        correct: 3
+        correct: 1
     },
     {
         text: "What color was the original Twitter bird?",
