@@ -139,7 +139,7 @@ form.addEventListener("submit", (e) => {
     const a2 = document.getElementById("a2").value;
     const a3 = document.getElementById("a3").value;
     const a4= document.getElementById("a4").value;
-    const correct = parseInt(document.getElementById("correct").value);
+    const correct = parseInt(document.getElementById("correctAns").value);
 
     const newQuestion = {
         text: qText,
@@ -152,5 +152,9 @@ form.addEventListener("submit", (e) => {
 
     form.reset();
 
-    alert(`Question added! Total questions: ${questions.length}`)
+    const msg = document.createElement("p");
+    msg.textContent = "Question added!";
+    form.appendChild(msg);
+    setTimeout(()=> msg.remove(), 2000);
+
 });
