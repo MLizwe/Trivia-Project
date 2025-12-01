@@ -68,7 +68,11 @@ function showQuestion() {
 
     const container = document.getElementById("game-screen");
     container.innerHTML = `
+        <div class="question-header">
+        <img src="assets/questions.png" class="q-icon" alt="">
         <h2>${q.text}</h2>
+</div>
+
         <div id="answers"></div>
     `;
 

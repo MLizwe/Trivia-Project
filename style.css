@@ -66,3 +66,32 @@ button:hover {
   font-weight: bold;
 }
 
+#banner-img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  margin-top: 15px;
+  border-radius: 8px;
+  opacity: 0.9;
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.q-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.form-icon {
+  width: 45px;
+  display: block;
+  margin-bottom: 15px;
+  opacity: 0.85;
+}
+
+
