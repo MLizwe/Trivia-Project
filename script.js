@@ -65,26 +65,42 @@ function updateScoreBoard(){
 
 function showQuestion() {
     const q = questions[currentIndex];
-
     const container = document.getElementById("game-screen");
-    container.innerHTML = `
-        <div class="question-header">
-        <img src="assets/questions.png" class="q-icon" alt="">
-        <h2>${q.text}</h2>
-</div>
 
-        <div id="answers"></div>
+    // Build the HTML for the answer buttons
+    let answersHTML = "";
+    q.answers.forEach((ans, i) => {
+        answersHTML += `
+            <button class="answer-btn" data-index="${i + 1}">
+                ${ans}
+            </button>
+        `;
+    });
+
+    // Insert the card template
+    container.innerHTML = `
+      <div class="question-card">
+        <div class="question-header">
+          <img src="assets/questions.png" class="q-icon">
+          <h2>${q.text}</h2>
+        </div>
+
+        <div class="answers">
+          ${answersHTML}
+        </div>
+      </div>
     `;
 
-    const answersDiv = document.getElementById("answers");
-
-    q.answers.forEach((ans, i) => {
-        const btn = document.createElement("button");
-        btn.textContent = ans;
-        btn.onclick = () => checkAnswer(i + 1);
-        answersDiv.appendChild(btn);
+    // Attach click events AFTER buttons are on the page
+    const answerButtons = container.querySelectorAll(".answer-btn");
+    answerButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const selected = parseInt(btn.dataset.index);
+            checkAnswer(selected);
+        });
     });
-};
+}
+
 
 function showQuestions() {};
 function checkAnswer(selected) {
