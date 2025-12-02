@@ -8,8 +8,15 @@ let currentIndex = 0;
 let score = 0;
 let wrong = 0;
 
+
+function pickRandomQuestions(list, count) {
+    const shuffled = [...list].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+}
+
 function startGame() {
-    questionsList = getAllQuestions();   // load base + stored questions
+    const fullList = getAllQuestions(); // base + added
+    questionsList = pickRandomQuestions(fullList, 10); // pick 10 random
     currentIndex = 0;
     score = 0;
     wrong = 0;
