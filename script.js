@@ -1,73 +1,37 @@
 "use strict";
 
-//will start with a basic pool of questions 
-const questions = [
-    {
-        text: "What year did the first iPhone release?",
-        answers: ["2005", "2007", "2009", "2011"],
-        correct: 2
-    },
-    {
-        text: "What was the first ever video uploaded to YouTube?",
-        answers: ["Charlie Bit My Finger", "Me at the Zoo", "Evoluiton of Dance", "Keyboard Cat"],
-        correct: 2
-    },
-    {
-        text: "Who founded Microsoft?",
-        answers: ["Elon Mask", "Mark Zuckerburg", "Bill Gates", "Steve Jobs"],
-        correct: 3
-    },
-    {
-        text: "What game did the “sus” meme come from?",
-        answers: ["Among Us", "PUBG", "Minecraft", "Hyperblok"],
-        correct: 1
-    },
-    {
-        text: "What year did Google launch?",
-        answers: ["2001", "1998", "1977", "1991"],
-        correct: 2
-    },
-    {
-        text: "What is the most-used social app worldwide? ",
-        answers: ["Tiktok", "Facebook", "Instagram", "Youtube"],
-        correct: 1
-    },
-    {
-        text: "What color was the original Twitter bird?",
-        answers: ["Black", "Gold", "White","Blue"],
-        correct: 4
-    },
-    {
-        text: "Which company owns Instagram?",
-        answers: ["Meta", "Facebook", "Twitter", "Tesla"],
-        correct: 1
-    }
-    
-];
+import { getAllQuestions, getRandomQuestion, addQuestion } from "./questions.js";
 
-//state of the game 
+// game state
+let questionsList = []; 
 let currentIndex = 0;
 let score = 0;
 let wrong = 0;
 
-
-//possible functions ***to be expanded***
 function startGame() {
+    questionsList = getAllQuestions();   // load base + stored questions
     currentIndex = 0;
     score = 0;
+    wrong = 0;
+    updateScoreBoard();
     showQuestion();
 }
 
-function updateScoreBoard(){
+function updateScoreBoard() {
     document.getElementById("correct").textContent = score;
     document.getElementById("wrong").textContent = wrong;
 }
 
 function showQuestion() {
-    const q = questions[currentIndex];
+    const q = questionsList[currentIndex];
     const container = document.getElementById("game-screen");
 
-    // Build the HTML for the answer buttons
+    if (!q) {
+        endGame();
+        return;
+    }
+
+    // Build answer buttons
     let answersHTML = "";
     q.answers.forEach((ans, i) => {
         answersHTML += `
@@ -77,7 +41,6 @@ function showQuestion() {
         `;
     });
 
-    // Insert the card template
     container.innerHTML = `
       <div class="question-card">
         <div class="question-header">
@@ -91,7 +54,7 @@ function showQuestion() {
       </div>
     `;
 
-    // Attach click events AFTER buttons are on the page
+    // add click events
     const answerButtons = container.querySelectorAll(".answer-btn");
     answerButtons.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -101,21 +64,13 @@ function showQuestion() {
     });
 }
 
-
-function showQuestions() {};
 function checkAnswer(selected) {
-    // guard: if somehow go past the length, end the game
-    if (currentIndex >= questions.length) {
+    if (currentIndex >= questionsList.length) {
         endGame();
         return;
     }
 
-    const q = questions[currentIndex];
-
-    if (!q) { 
-        endGame();
-        return;
-    }
+    const q = questionsList[currentIndex];
 
     if (selected === q.correct) {
         score++;
@@ -127,7 +82,7 @@ function checkAnswer(selected) {
 
     currentIndex++;
 
-    if (currentIndex < questions.length) {
+    if (currentIndex < questionsList.length) {
         showQuestion();
     } else {
         endGame();
@@ -143,38 +98,34 @@ function endGame() {
     `;
 }
 
-
-
+// Start game on load
 startGame();
 
-//firgure out how to add questions from html form...
+//
+// FORM: Add new multiple-choice question
+//
 const form = document.getElementById("question-form");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    //grab values 
     const qText = document.getElementById("qText").value;
     const a1 = document.getElementById("a1").value;
     const a2 = document.getElementById("a2").value;
     const a3 = document.getElementById("a3").value;
-    const a4= document.getElementById("a4").value;
+    const a4 = document.getElementById("a4").value;
     const correct = parseInt(document.getElementById("correctAns").value);
 
-    const newQuestion = {
-        text: qText,
-        answers: [a1, a2, a3, a4],
-        correct: correct
-    };
+    // SAVE to sessionStorage through module
+    addQuestion(qText, [a1, a2, a3, a4], correct);
 
-    //Add to questions array
-    questions.push(newQuestion);
+    // refresh the list
+    questionsList = getAllQuestions();
 
+    // feedback
     form.reset();
-
     const msg = document.createElement("p");
     msg.textContent = "Question added!";
     form.appendChild(msg);
-    setTimeout(()=> msg.remove(), 2000);
-
+    setTimeout(() => msg.remove(), 2000);
 });
