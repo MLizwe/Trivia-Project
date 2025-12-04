@@ -99,9 +99,3 @@ export function addQuestion(text, answers, correct) {
   sessionStorage.setItem("addedQuestions", JSON.stringify(added));
 }
 
-// Pick a random question
-export function getRandomQuestion() {
-  const all = getAllQuestions();
-  const index = Math.floor(Math.random() * all.length);
-  return all[index];
-}

@@ -1,6 +1,6 @@
 "use strict";
 
-import { getAllQuestions, getRandomQuestion, addQuestion } from "./questions.js";
+import { getAllQuestions, addQuestion } from "./questions.js";
 
 // game state
 let questionsList = []; 
