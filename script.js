@@ -97,14 +97,28 @@ function checkAnswer(selected) {
 }
 
 function endGame() {
-    const container = document.getElementById("game-screen");
-    container.innerHTML = `
-        <h2>All done!</h2>
-        <p>Correct: ${score}</p>
-        <p>Wrong: ${wrong}</p>
+const container = document.getElementById("game-screen");
+const percentage = Math.round((score / questionsList.length) * 100);
+    
+container.innerHTML = `
+        <div class="question-card">
+            <h2>🎮 Game Over!</h2>
+            <p style="font-size: 1.5rem; margin: 20px 0;">
+                <span style="color: #4eff8c;">Correct: ${score}</span> | 
+                <span style="color: #ff6b6b;">Wrong: ${wrong}</span>
+            </p>
+            <p style="font-size: 1.2rem; margin: 15px 0;">
+                Final Score: ${score}/${questionsList.length} (${percentage}%)
+            </p>
+            <button id="play-again-btn">
+                🔄 Play Again
+            </button>
+        </div>
     `;
+    
+    // Add click event to the new button
+    document.getElementById("play-again-btn").addEventListener("click", startGame);
 }
-
 // Start game on load
 startGame();
 
